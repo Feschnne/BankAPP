@@ -289,7 +289,7 @@ if matchAccWBa = true then Console.WriteLine " Balance > 167.21 pertains to Acco
 
 
 //TASK 4
-(*
+
 Console.WriteLine ""
 Console.WriteLine ""
 Console.WriteLine " ======================="
@@ -302,7 +302,7 @@ let mutable customerName = string(Console.ReadLine())
 Console.Write " Please choose a sit from 1..10 > "
 let mutable customerSeat = int(Console.ReadLine())
 
-type Ticket = {seat:int; customer:string}
+type Ticket1 = {seat:int; customer:string}
 
                     member this.Print =
                         Console.WriteLine " "
@@ -314,16 +314,16 @@ type Ticket = {seat:int; customer:string}
                         Console.WriteLine ""
 
 
-let customer1: Ticket = {seat = customerSeat; customer = customerName}
-let customer2: Ticket = {seat = 2; customer = "Karla "}
-let customer3: Ticket = {seat = 3; customer = "Ellie "}
-let customer4: Ticket = {seat = 4; customer = "Darryl"}
-let customer5: Ticket = {seat = 5; customer = "Ryan  "}
-let customer6: Ticket = {seat = 6; customer = "Ernie "}
-let customer7: Ticket = {seat = 7; customer = "Becky "}
-let customer8: Ticket = {seat = 8; customer = "Laura "}
-let customer9: Ticket = {seat = 9; customer = "Ana   "}
-let customer10: Ticket = {seat = 10; customer = "Angie "}
+let customer1: Ticket1 = {seat = customerSeat; customer = customerName}
+let customer2: Ticket1 = {seat = 2; customer = "Karla "}
+let customer3: Ticket1 = {seat = 3; customer = "Ellie "}
+let customer4: Ticket1 = {seat = 4; customer = "Darryl"}
+let customer5: Ticket1 = {seat = 5; customer = "Ryan  "}
+let customer6: Ticket1 = {seat = 6; customer = "Ernie "}
+let customer7: Ticket1 = {seat = 7; customer = "Becky "}
+let customer8: Ticket1 = {seat = 8; customer = "Laura "}
+let customer9: Ticket1 = {seat = 9; customer = "Ana   "}
+let customer10: Ticket1 = {seat = 10; customer = "Angie "}
 
 customer1.Print
 customer2.Print
@@ -337,7 +337,18 @@ customer9.Print
 customer10.Print
 
 
-let mutable tickets = [for n in 1..10 -> {Ticket.seat = n; Ticket.customer = "" }]
+open System.Threading
 
-Console.WriteLine tickets
-*)
+type Ticket = {seat:int; customer:string}
+let mutable tickets2 = [for n in 1..10 -> {Ticket.seat = n; Ticket.customer = ""}]
+let bookSeat _ =
+    Console.WriteLine("Enter seat number: ")
+    let seatNo = int(Console.ReadLine())
+    Console.WriteLine("Enter customer name: ")
+    let name = string(Console.ReadLine())
+    let book seatNo name tickets = 
+        tickets |> List.map (fun ticket ->
+            if ticket.seat = seatNo then { ticket with customer = name }
+            else ticket )    
+    tickets2 <- book seatNo name tickets2
+
